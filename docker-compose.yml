@@ -1,0 +1,9 @@
+version: "3"
+
+services:
+  jasmin_admin:
+    build:
+      context: ./
+      dockerfile: jasmin_admin/Dockerfile
+    image: createworld.azurecr.io/jasmin_admin
+    container_name: jasmin_admin

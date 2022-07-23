@@ -1,0 +1,43 @@
+apiVersion: batch/v1
+kind: CronJob
+metadata:
+  name: daily-quota
+spec:
+  suspend: false
+  schedule: "00 15 * * *"
+  concurrencyPolicy: Forbid
+  jobTemplate:
+    spec:
+      template:
+        spec:
+          nodeSelector:
+            poolname: appspool
+          containers:
+            - env:
+              - name: TELNET_HOST
+                value: jasmin
+              - name: POSTGRES_HOST
+                valueFrom:
+                  configMapKeyRef:
+                    name: postgres-db-config
+                    key: host
+              - name: POSTGRES_DB
+                valueFrom:
+                  configMapKeyRef:
+                    name: postgres-db-config
+                    key: database
+              - name: POSTGRES_USERNAME
+                valueFrom: 
+                  secretKeyRef:
+                    name: postgres-db-token
+                    key: username
+              - name: POSTGRES_PASSWORD
+                valueFrom: 
+                  secretKeyRef:
+                    name: postgres-db-token
+                    key: password
+              name: daily-quota
+              image: createworld.azurecr.io/jasmin_admin
+#              imagePullPolicy: IfNotPresent
+              imagePullPolicy: Always
+          restartPolicy: Never

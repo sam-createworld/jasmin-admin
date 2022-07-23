@@ -1,0 +1,6 @@
+[submodule "cwt_datamodel"]
+	path = cwt_datamodel
+	url = git@github.com:createworldtech/cwt_datamodel.git
+[submodule "jasmin-web-panel"]
+	path = jasmin_web_panel
+	url = git@github.com:createworldtech/jasmin-web-panel.git
